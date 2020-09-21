@@ -21,7 +21,7 @@ steps:
 - task: AzureCLI@2
   inputs:
     azureSubscription: 'Learning Azure(89479a31-892f-474d-8fa5-8896ad62ea57)'
-    scriptType: 'ps'
+    scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: 'az group create -n myResourceGroup -l eastus'
 
