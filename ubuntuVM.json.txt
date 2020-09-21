@@ -1,0 +1,38 @@
+{
+	"builders": [{
+		"type": "azure-arm",
+
+		"client_id": "5d9e7cd5-5016-4236-acfd-a42a30ce1f58",
+		"client_secret": "PsRx_~-K9_i629P77U6Fr4WRZhJRUsko-Q",
+		"tenant_id": "fbc94d82-6970-479f-aabb-59c2c4976e22",
+		"subscription_id": "89479a31-892f-474d-8fa5-8896ad62ea57",
+
+		"managed_image_resource_group_name": "myResourceGroup",
+		"managed_image_name": "myPackerImage",
+
+		"os_type": "Linux",
+		"image_publisher": "Canonical",
+		"image_offer": "UbuntuServer",
+		"image_sku": "16.04-LTS",
+
+		"azure_tags": {
+			"dept": "Engineering",
+			"task": "Image deployment"
+		},
+
+		"location": "East US",
+		"vm_size": "Standard_DS2_v2"
+	}],
+	"provisioners": [{
+		"execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'",
+		"inline": [
+			"apt-get update",
+			"apt-get upgrade -y",
+			"apt-get -y install nginx",
+
+			"/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
+		],
+		"inline_shebang": "/bin/sh -x",
+		"type": "shell"
+	}]
+}
