@@ -1,0 +1,31 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Learning Azure(89479a31-892f-474d-8fa5-8896ad62ea57)'
+    scriptType: 'ps'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az group create -n myResourceGroup -l eastus'
+
+- task: PackerBuild@1
+  inputs:
+    templateType: 'custom'
+    customTemplateLocation: 'ubuntuVM.json'
